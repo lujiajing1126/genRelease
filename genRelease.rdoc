@@ -1,0 +1,5 @@
+= genRelease
+
+Generate this with
+    genRelease rdoc
+After you have described your command line interface

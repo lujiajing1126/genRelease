@@ -1,0 +1,6 @@
+= genRelease
+
+Describe your project here
+
+:include:genRelease.rdoc
+

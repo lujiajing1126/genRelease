@@ -1,0 +1,86 @@
+#!/usr/bin/env ruby
+require 'gli'
+begin # XXX: Remove this begin/rescue before distributing your app
+require 'genRelease'
+rescue LoadError
+  STDERR.puts "In development, you need to use `bundle exec bin/genRelease` to run your app"
+  STDERR.puts "At install-time, RubyGems will make sure lib, etc. are in the load path"
+  STDERR.puts "Feel free to remove this message from bin/genRelease now"
+  exit 64
+end
+# require commands files
+Dir.glob("./lib/genRelease/commands/*.rb").sort.each do |f|
+  require f
+end
+
+include GLI::App
+
+program_desc 'Describe your application here'
+
+version GenRelease::VERSION
+
+subcommand_option_handling :normal
+arguments :strict
+
+desc 'Describe some switch here'
+switch [:s,:switch]
+desc 'Whether print the details'
+switch :verbose, :negatable => false
+desc 'Describe some flag here'
+default_value 'the default'
+arg_name 'The name of the argument'
+flag [:f,:flagname]
+
+desc 'Generate the packages file including checksum of all files'
+arg_name 'buildpath',:multiple
+command :build do |c|
+  desc 'set up one Hostname for the release'
+  c.flag [:h,:hostname,'host-name'], :required => true
+
+  c.action do |global_options,options,args|
+    # Your command logic here
+    # If you have any errors, just raise them
+    # raise "that command made no sense"
+    builder = GenRelease::Commands::Build.new(global_options,*args)
+    builder.build options
+  end
+end
+
+desc 'Describe clean here'
+arg_name 'Describe arguments to clean here'
+command :clean do |c|
+  c.action do |global_options,options,args|
+    puts "clean command ran"
+  end
+end
+
+desc 'Describe sign here'
+arg_name 'Describe arguments to sign here'
+command :sign do |c|
+  c.action do |global_options,options,args|
+    puts "sign command ran"
+  end
+end
+
+pre do |global,command,options,args|
+  # Pre logic here
+  # Return true to proceed; false to abort and not call the
+  # chosen command
+  # Use skips_pre before a command to skip this block
+  # on that command only
+  true
+end
+
+post do |global,command,options,args|
+  # Post logic here
+  # Use skips_post before a command to skip this
+  # block on that command only
+end
+
+on_error do |exception|
+  # Error logic here
+  # return false to skip default error handling
+  true
+end
+
+exit run(ARGV)
