@@ -6,6 +6,7 @@ module GenRelease
     class Build
       FILTERS = %w{'.','..','.DS_Store'}
       FILENAME = 'Packages'
+      RELEASE = 'Release'
       CHECKSUM = %w{'md5','sha1'}
       def initialize(global_options,*directory_lists)
         @global_options = global_options
@@ -19,6 +20,7 @@ module GenRelease
           enum_path "#{@current_dir}#{File::SEPARATOR}#{directory}"
         end
         write_to_modules
+        sign
       end
 
       private
@@ -44,6 +46,17 @@ module GenRelease
 
       def write_to_modules
         FileUtils::write(FILENAME,FileUtils::format(@checksum))
+      end
+      def sign
+        content = File.open("#{@current_dir}#{File::SEPARATOR}Packages") { |file| file.read }
+        md5 = Digest::MD5.hexdigest(content.gsub("\n",""))
+        sha1 = Digest::SHA1.hexdigest(content.gsub("\n",""))
+        checksum = {}
+        checksum[@hostname] = {
+            :md5 => md5,
+            :sha1 => sha1
+        }
+        FileUtils::write(RELEASE,FileUtils::format(checksum))
       end
     end
   end

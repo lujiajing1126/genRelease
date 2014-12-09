@@ -54,11 +54,17 @@ command :clean do |c|
   end
 end
 
-desc 'Describe sign here'
-arg_name 'Describe arguments to sign here'
+desc 'Create a new RSA keypair'
+command :create do |c|
+  c.action do |global_options,options,args|
+    GenRelease::Commands::Create.new(global_options).create
+  end
+end
+
+desc 'Use RSA to sign the packages'
 command :sign do |c|
   c.action do |global_options,options,args|
-    puts "sign command ran"
+    signer = GenRelease::Commands::Sign.new(options).sign
   end
 end
 
