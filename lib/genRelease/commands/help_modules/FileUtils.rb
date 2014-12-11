@@ -1,3 +1,4 @@
+require 'json'
 module GenRelease
   module FileUtils
     extend self
@@ -14,11 +15,7 @@ module GenRelease
     end
 
     def format(content)
-      result = ""
-      content.each do |k,v|
-        result << ::Kernel::sprintf("%s\nmd5:%s\nsha1:%s\n\n",k.to_s,v[:md5],v[:sha1])
-      end
-      result
+      content.to_json.to_s
     end
   end
 end
