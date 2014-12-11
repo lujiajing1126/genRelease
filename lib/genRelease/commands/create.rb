@@ -1,4 +1,3 @@
-require 'genRelease/commands/help_modules/OpenSSLUtils'
 module GenRelease
   module Commands
     class Create

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    genRelease (0.0.1)
+    genRelease (0.1.3)
       gli (= 2.12.2)
 
 GEM

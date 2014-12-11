@@ -1,4 +1,3 @@
-'genRelease/commands/help_modules/FileUtils'
 module GenRelease
   module OpenSSLUtils
     extend self

@@ -8,10 +8,6 @@ rescue LoadError
   STDERR.puts "Feel free to remove this message from bin/genRelease now"
   exit 64
 end
-# require commands files
-Dir.glob("./lib/genRelease/commands/*.rb").sort.each do |f|
-  require f
-end
 
 include GLI::App
 

@@ -1,6 +1,5 @@
 require 'digest/md5'
 require 'digest/sha1'
-require 'genRelease/commands/help_modules/FileUtils'
 module GenRelease
   module Commands
     class Build
