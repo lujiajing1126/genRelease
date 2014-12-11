@@ -1,6 +1,6 @@
 require 'digest/md5'
 require 'digest/sha1'
-
+require 'openssl'
 module GenRelease
   module Commands
     class Sign
