@@ -1,3 +1,4 @@
+require 'openssl'
 module GenRelease
   module OpenSSLUtils
     extend self
