@@ -6,7 +6,7 @@ module GenRelease
     PEM = "rsa.pem"
 
     def new_certification_file
-      rsa = OpenSSL::PKey::RSA.new 2048
+      rsa = ::OpenSSL::PKey::RSA.new 2048
       p rsa.to_pem
       FileUtils::write PRIKEY, rsa.to_pem
       p rsa.public_key.to_s
